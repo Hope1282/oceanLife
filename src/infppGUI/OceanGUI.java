@@ -32,7 +32,44 @@ public class OceanGUI extends JFrame {
         JButton saveButton = new JButton("Speichern");
         JButton stopButton = new JButton("Stop");
         JButton quitButton = new JButton("Quit");
+        quitButton.addMouseListener(new MouseListener() {
+
+            @Override
+            public void mouseReleased(MouseEvent e) {}
+
+            @Override
+            public void mousePressed(MouseEvent e) {}
+
+            @Override
+            public void mouseExited(MouseEvent e) {}
+
+            @Override
+            public void mouseEntered(MouseEvent e) {}
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // TODO Auto-generated method stub
+                OceanGUI.this.dispose();
+            }
+        });
         JButton pasteButton = new JButton("Einfuegen");
+        pasteButton.addMouseListener(new MouseListener() {
+
+            @Override
+            public void mouseReleased(MouseEvent e) {}
+
+            @Override
+            public void mousePressed(MouseEvent e) {}
+
+            @Override
+            public void mouseExited(MouseEvent e) {}
+
+            @Override
+            public void mouseEntered(MouseEvent e) {}
+
+            @Override
+            public void mouseClicked(MouseEvent e) {}
+        });
         JButton delButton = new JButton("Entfernen");
         JButton stepButton = new JButton("Step");
         JLabel xLabel = new JLabel("X-Koordinate");
