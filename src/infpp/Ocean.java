@@ -3,11 +3,11 @@ package infpp;
 import java.util.LinkedList;
 
 public class Ocean implements OceanInterface {
-	private static Ocean instance;
+	public static Ocean instance;
 	private int Width, Depth;
 	private LinkedList<OceanObject> oceanObjects;
 	
-	private Ocean (int width , int depth , LinkedList <OceanObject> oceanObjects ){
+	Ocean (int width , int depth , LinkedList <OceanObject> oceanObjects ){
 		this.Width= width;
 		this.Depth=depth;
 		this.oceanObjects=oceanObjects;
@@ -17,37 +17,37 @@ public class Ocean implements OceanInterface {
 	@Override
 	public int getWidth() {
 		// TODO Auto-generated method stub
-		return 0;
+		return this.Width;
 	}
 
 	@Override
 	public void setWidth(int width) {
 		// TODO Auto-generated method stub
-
+		this.Width = width;
 	}
 
 	@Override
 	public int getDepth() {
 		// TODO Auto-generated method stub
-		return 0;
+		return this.Depth;
 	}
 
 	@Override
 	public void setDepth(int depth) {
 		// TODO Auto-generated method stub
-
+		this.Depth = depth;
 	}
 
 	@Override
 	public LinkedList<OceanObject> getOceanObjects() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.oceanObjects;
 	}
 
 	@Override
 	public void setOceanObjects(LinkedList<OceanObject> oceanObjects) {
 		// TODO Auto-generated method stub
-
+		this.oceanObjects = oceanObjects;
 	}
 
 	public void move() {
@@ -97,7 +97,7 @@ public class Ocean implements OceanInterface {
 
 	public static synchronized Ocean getInstance() {
 		if (instance == null) {
-			instance = new Ocean(200, 200, new LinkedList<OceanObject>());
+			instance = new Ocean(20, 20, new LinkedList<OceanObject>());
 		}
 		return instance;
 	}

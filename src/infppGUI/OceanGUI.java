@@ -1,33 +1,31 @@
 package infppGUI;
 
-import infpp.Bubble;
-import infpp.Fish1;
-import infpp.OceanObject;
-import infpp.Plant;
-import infpp.Stone;
+import infpp.*;
 
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.*;
 
 public class OceanGUI extends JFrame {
 
     private static final long serialVersionUID = 1L;
-
+    private JButton loadButton = new JButton("Laden");
+    private JButton startButton = new JButton("Start");
+    private JButton saveButton = new JButton("Speichern");
+    private JButton stopButton = new JButton("Stop");
+    private JButton quitButton = new JButton("Quit");
+    private JButton pasteButton = new JButton("Einfuegen");
+    private JButton delButton = new JButton("Entfernen");
+    private JButton stepButton = new JButton("Step");
+    
+    private JLabel oceanTT;
+    
     public OceanGUI(String title, String TOcean) {
-        super(title);
-        ImageIcon pic = new ImageIcon("");
+    	super(title);
+        ImageIcon pic = new ImageIcon("src/3.jpg");
         JPanel menu = new JPanel();
-        JButton loadButton = new JButton("Laden");
         loadButton.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -60,7 +58,6 @@ public class OceanGUI extends JFrame {
 				
 			}
 		});
-        JButton startButton = new JButton("Start");
         startButton.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -93,7 +90,6 @@ public class OceanGUI extends JFrame {
 				
 			}
 		});
-        JButton saveButton = new JButton("Speichern");
         saveButton.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -126,7 +122,6 @@ public class OceanGUI extends JFrame {
 				
 			}
 		});
-        JButton stopButton = new JButton("Stop");
         stopButton.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -159,7 +154,6 @@ public class OceanGUI extends JFrame {
 				
 			}
 		});
-        JButton quitButton = new JButton("Quit");
         quitButton.addMouseListener(new MouseListener() {
 
             @Override
@@ -180,7 +174,6 @@ public class OceanGUI extends JFrame {
                 OceanGUI.this.dispose();
             }
         });
-        JButton pasteButton = new JButton("Einfuegen");
         pasteButton.addMouseListener(new MouseListener() {
 
             @Override
@@ -198,7 +191,6 @@ public class OceanGUI extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {}
         });
-        JButton delButton = new JButton("Entfernen");
         delButton.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -231,7 +223,6 @@ public class OceanGUI extends JFrame {
 				
 			}
 		});
-        JButton stepButton = new JButton("Step");
         stepButton.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -259,9 +250,10 @@ public class OceanGUI extends JFrame {
 			}
 			
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
+			public void mouseClicked(MouseEvent ar) {
 				// TODO Auto-generated method stub
 				infpp.Ocean.getInstance().move();
+				oceanTT.setText(Ocean.getInstance().plot());
 			}
 		});
         JLabel xLabel = new JLabel("X-Koordinate");
@@ -299,7 +291,7 @@ public class OceanGUI extends JFrame {
         menu.add(stepButton);
         menu.setLayout(new GridLayout(2, 7));
         JPanel oceanT = new JPanel();
-        JLabel oceanTT = new JLabel(TOcean);
+        oceanTT = new JLabel(TOcean);
         oceanT.add(oceanTT);
         JPanel oceanP = new JPanel();
         JLabel oceanPP = new JLabel(pic);
@@ -308,6 +300,7 @@ public class OceanGUI extends JFrame {
         add(oceanP);
         add(oceanT);
         setLayout(new GridLayout(2, 2));
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     public static void main(String[] args) {

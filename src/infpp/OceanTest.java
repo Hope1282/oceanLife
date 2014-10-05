@@ -1,10 +1,8 @@
 package infpp;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
-public class OceanTest implements ActionListener {
+public class OceanTest {
 
     /**
      * @param args
@@ -22,6 +20,7 @@ public class OceanTest implements ActionListener {
         oceanObjects.add(new Bubble(245, 470, "Bubble"));
         oceanObjects.add(new Fish1(8, 0, "Ralph"));
         Ocean ocean = new Ocean(width, depth, oceanObjects);
+        Ocean.instance = ocean;
         System.out.println(ocean);
         System.out.println(ocean.plot());
         // ocean.move();
@@ -32,17 +31,5 @@ public class OceanTest implements ActionListener {
         gui.pack();
         gui.setVisible(true);
     }
-
-    @Override
-    public void actionPerformed(ActionEvent arg0) {
-        // TODO Auto-generated method stub
-
-    }
-
-    // @Override
-    // public void actionPerformed(ActionEvent e) {
-    // TODO Auto-generated method stub
-    // if(e.getSource()==gui.getJButton(stepButton);
-    // }
-
+   
 }
