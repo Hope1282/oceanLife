@@ -3,10 +3,11 @@ package infpp;
 import java.util.LinkedList;
 
 public class Ocean implements OceanInterface {
+	private static Ocean instance;
 	private int Width, Depth;
 	private LinkedList<OceanObject> oceanObjects;
 	
-	Ocean (int width , int depth , LinkedList <OceanObject> oceanObjects ){
+	private Ocean (int width , int depth , LinkedList <OceanObject> oceanObjects ){
 		this.Width= width;
 		this.Depth=depth;
 		this.oceanObjects=oceanObjects;
@@ -49,7 +50,6 @@ public class Ocean implements OceanInterface {
 
 	}
 
-	@Override
 	public void move() {
 		// TODO Auto-generated method stub
 		for(int i=0;i<oceanObjects.size();i++){
@@ -92,6 +92,14 @@ public class Ocean implements OceanInterface {
 			str2 =str2 + "<br>";
 		}
 		return "<html>"+str1+"<br>"+str2+str1+"</html>";
+	}
+
+
+	public static synchronized Ocean getInstance() {
+		if (instance == null) {
+			instance = new Ocean(200, 200, new LinkedList<OceanObject>());
+		}
+		return instance;
 	}
 
 }

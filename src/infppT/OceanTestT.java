@@ -1,6 +1,5 @@
 package infppT;
 
-import infpp.Fish;
 
 public class OceanTestT {
 

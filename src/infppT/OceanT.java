@@ -1,6 +1,5 @@
 package infppT;
 
-import infpp.Fish;
 
 public class OceanT {
 	private int width, depth;
