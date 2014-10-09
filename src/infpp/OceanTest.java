@@ -9,8 +9,8 @@ public class OceanTest {
      */
     public static void main(String[] args) {
         // TODO Auto-generated method stub
-        int width = 20;
-        int depth = 6;
+        int width = 40;
+        int depth = 15;
         LinkedList<OceanObject> oceanObjects;
         oceanObjects = new LinkedList<OceanObject>();
         oceanObjects.add(new Fish1(54, 19, "Nemofish", "Fish"));
@@ -18,7 +18,7 @@ public class OceanTest {
         oceanObjects.add(new Stone(321, 267, "Stone", "Stone"));
         oceanObjects.add(new Plant(163, 550, "Plant", "Plant"));
         oceanObjects.add(new Bubble(245, 470, "Bubble", "Bubble"));
-        oceanObjects.add(new Fish1(8, 0, "Ralph", "Fish"));
+        oceanObjects.add(new Fish1(8, 14, "Ralph", "Fish"));
         Ocean ocean = new Ocean(width, depth, oceanObjects);
         Ocean.instance = ocean;
         System.out.println(ocean);

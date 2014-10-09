@@ -20,10 +20,31 @@ public class OceanGUI extends JFrame {
     private JButton delButton = new JButton("Entfernen");
     private JButton stepButton = new JButton("Step");
     
+    private boolean moveOn;
+    
+    private Thread thread;
+    
     private JLabel oceanTT;
+    
+   
     
     public OceanGUI(String title, String TOcean) {
     	super(title);
+    	
+    	 class GoOn implements Runnable {
+         	
+         	public void run(){
+         		while(moveOn){
+         			try{
+         				Thread.sleep(100);
+         				Ocean.getInstance().move();
+         				oceanTT.setText(Ocean.getInstance().plot());
+         			}catch(InterruptedException ex){	
+         			}
+         		}
+         	}
+         }
+    	
         ImageIcon pic = new ImageIcon("src/3.jpg");
         JPanel menu = new JPanel();
         loadButton.addMouseListener(new MouseListener() {
@@ -87,7 +108,10 @@ public class OceanGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				
+				GoOn job = new GoOn();
+				moveOn = true;
+				thread = new Thread(job);
+				thread.start();
 			}
 		});
         saveButton.addMouseListener(new MouseListener() {
@@ -151,7 +175,7 @@ public class OceanGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				
+				moveOn = false;
 			}
 		});
         quitButton.addMouseListener(new MouseListener() {
@@ -171,6 +195,7 @@ public class OceanGUI extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // TODO Auto-generated method stub
+            	moveOn = false;
                 OceanGUI.this.dispose();
             }
         });
@@ -189,7 +214,9 @@ public class OceanGUI extends JFrame {
             public void mouseEntered(MouseEvent e) {}
 
             @Override
-            public void mouseClicked(MouseEvent e) {}
+            public void mouseClicked(MouseEvent e) {
+            	//if()
+            }
         });
         delButton.addMouseListener(new MouseListener() {
 			
