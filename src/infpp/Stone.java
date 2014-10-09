@@ -20,8 +20,19 @@ public class Stone extends OceanObject {
 	@Override
 	public void move() {
 		// TODO Auto-generated method stub
-		super.getPosition()[0]-=10;
-		super.getPosition()[1]+=10;
+		boolean fall = true;
+		if(super.getPosition()[1]<Ocean.getInstance().getDepth()-1){
+			for(int i=0; i<Ocean.getInstance().getOceanObjects().size();i++){
+				if(Ocean.getInstance().getOceanObjects().get(i).getObject() == "Stone"){
+					if(Ocean.getInstance().getOceanObjects().get(i).getPosition()[1] == this.getPosition()[1]+1){
+						fall = false;
+					}
+				}
+			}
+			if(fall){
+				this.getPosition()[1]+=1;
+			}
+		}
 	}
 
 }

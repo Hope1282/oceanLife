@@ -54,6 +54,17 @@ public class Ocean implements OceanInterface {
 		// TODO Auto-generated method stub
 		for(int i=0;i<oceanObjects.size();i++){
 			oceanObjects.get(i).move();
+			if(oceanObjects.get(i).getObject() == "Fish"){
+				for(int j=0;j<oceanObjects.size();j++){
+					if(oceanObjects.get(j).getObject().equals("Plant")){
+						if(oceanObjects.get(j).getPosition()[0] == oceanObjects.get(i).getPosition()[0]){
+							if(oceanObjects.get(j).getPosition()[1] == oceanObjects.get(i).getPosition()[1]){
+							oceanObjects.remove(j);
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 	public String toString(){

@@ -21,7 +21,20 @@ public class Bubble extends OceanObject {
 	@Override
 	public void move() {
 		// TODO Auto-generated method stub
-		super.getPosition()[0]+=10;
+		if(this.getPosition()[1]>0){
+			super.getPosition()[1]-=1;
+		} else {
+			for(int i=0; i<infppGUI.OceanGUI.getDeleteBox().getItemCount();i++){
+				if(infppGUI.OceanGUI.getDeleteBox().getItemAt(i).equals(this.getName())){
+					infppGUI.OceanGUI.getDeleteBox().removeItemAt(i);
+				}
+			}
+			for(int i=0; i<Ocean.getInstance().getOceanObjects().size(); i++){
+				if(Ocean.getInstance().getOceanObjects().get(i) == this){
+					Ocean.getInstance().getOceanObjects().remove(i);
+				}
+			}
+		}
 	}
 
 }
