@@ -7,13 +7,13 @@ public class Stone extends OceanObject {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Stone(int[] position, String name) {
-		super(position, name);
+	public Stone(int[] position, String name, String object) {
+		super(position, name, object);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Stone(int x, int y, String name) {
-		super(x, y, name);
+	public Stone(int x, int y, String name, String object) {
+		super(x, y, name, object);
 		// TODO Auto-generated constructor stub
 	}
 

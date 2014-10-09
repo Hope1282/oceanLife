@@ -259,12 +259,12 @@ public class OceanGUI extends JFrame {
         JLabel xLabel = new JLabel("X-Koordinate");
         JLabel yLabel = new JLabel("Y-Koordinate");
 
-        JComboBox<OceanObject> objectChooser = new JComboBox<OceanObject>();
+        JComboBox<String> objectChooser = new JComboBox<String>();
         objectChooser.addItem(null);
-        objectChooser.addItem(new Fish1(0, 0, "Fish"));
-        objectChooser.addItem(new Plant(0, 0, "Plant"));
-        objectChooser.addItem(new Stone(0, 0, "Stone"));
-        objectChooser.addItem(new Bubble(0, 0, "Bubble"));
+        objectChooser.addItem("Fish");
+        objectChooser.addItem("Plant");
+        objectChooser.addItem("Stone");
+        objectChooser.addItem("Bubble");
 
         JComboBox<OceanObject> objectChooser2 = new JComboBox<OceanObject>();
         objectChooser.addItem(null);
@@ -301,13 +301,5 @@ public class OceanGUI extends JFrame {
         add(oceanT);
         setLayout(new GridLayout(2, 2));
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-    }
-
-    public static void main(String[] args) {
-        // TODO Auto-generated method stub
-        OceanGUI gui = new OceanGUI("Ocean", "blub");
-        gui.setLocation(0, 0);
-        gui.pack();
-        gui.setVisible(true);
     }
 }

@@ -7,13 +7,14 @@ public class Bubble extends OceanObject {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Bubble(int[] position, String name) {
-		super(position, name);
+	public Bubble(int[] position, String name, String object) {
+		super(position, name, object);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Bubble(int x, int y, String name) {
-		super(x, y, name);
+
+	public Bubble(int x, int y, String name, String object) {
+		super(x, y, name, object);
 		// TODO Auto-generated constructor stub
 	}
 
