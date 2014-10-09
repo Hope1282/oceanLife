@@ -23,7 +23,6 @@ public class OceanTest {
         Ocean.instance = ocean;
         System.out.println(ocean);
         System.out.println(ocean.plot());
-        // ocean.move();
         System.out.println(ocean);
         System.out.println(ocean.plot());
         infppGUI.OceanGUI gui = new infppGUI.OceanGUI("Ocean", ocean.plot());

@@ -20,17 +20,33 @@ public class OceanGUI extends JFrame {
     private JButton delButton = new JButton("Entfernen");
     private JButton stepButton = new JButton("Step");
     
+    private JComboBox<String> objectChooser;
+    private JComboBox<String> objectChooser2;
+    
+    private JSpinner heightSpinner;
+    private JSpinner widthSpinner;
+    
     private boolean moveOn;
     
     private Thread thread;
     
     private JLabel oceanTT;
     
-   
     
     public OceanGUI(String title, String TOcean) {
     	super(title);
     	
+    	objectChooser = new JComboBox<String>();
+    	objectChooser2 = new JComboBox<String>();
+    	
+    	SpinnerNumberModel fishSpinner = new SpinnerNumberModel(20, 0, 1000, 50);
+        heightSpinner = new JSpinner(fishSpinner);
+
+        SpinnerNumberModel fishSpinner2 = new SpinnerNumberModel(20, 0, 1000, 50);
+        widthSpinner = new JSpinner(fishSpinner2);
+
+        
+        
     	 class GoOn implements Runnable {
          	
          	public void run(){
@@ -215,7 +231,44 @@ public class OceanGUI extends JFrame {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-            	//if()
+            	boolean stop = false;
+            	boolean valName = false;
+            	String objectName = "";
+            	String dialog = "Insert name";
+	            while(!stop){
+	            	if(!valName){
+	            		objectName = JOptionPane.showInputDialog(dialog);
+	            		if(objectName == null){
+	            			stop = true;
+	            		} else {
+	            			valName = true;
+	            			for(int i=0;i<Ocean.getInstance().getOceanObjects().size();i++){
+	            				if(objectName.equals(Ocean.getInstance().getOceanObjects().get(i).getName())){
+	            					valName = false;
+	            					dialog = "Insert valid name";
+	            				}
+	            			}
+	            		}
+	            	} else  {
+	            		int x = (Integer)widthSpinner.getValue();
+	            		int y = (Integer)heightSpinner.getValue();
+	            		if(objectChooser.getSelectedItem()==objectChooser.getItemAt(0)){
+	            			infpp.Ocean.getInstance().getOceanObjects().add(new Fish1(x,y,objectName,"Fish"));
+	            		}
+	            		if(objectChooser.getSelectedItem()==objectChooser.getItemAt(1)){
+	            			infpp.Ocean.getInstance().getOceanObjects().add(new Plant(x,y,objectName,"Plant"));
+	            		}
+	            		if(objectChooser.getSelectedItem()==objectChooser.getItemAt(2)){
+	            			infpp.Ocean.getInstance().getOceanObjects().add(new Stone(x,y,objectName,"Stone"));
+	            		}
+	            		if(objectChooser.getSelectedItem()==objectChooser.getItemAt(3)){
+	            			infpp.Ocean.getInstance().getOceanObjects().add(new Bubble(x,y,objectName,"Bubble"));
+	            		}
+	            		objectChooser2.addItem(objectName);
+	            		stop = true;
+	            	}
+	            	oceanTT.setText(Ocean.getInstance().plot());
+	            }
             }
         });
         delButton.addMouseListener(new MouseListener() {
@@ -246,8 +299,14 @@ public class OceanGUI extends JFrame {
 			
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
+				// TODO Auto-generated method
+				for(int i=0;i<Ocean.getInstance().getOceanObjects().size();i++){
+					if(Ocean.getInstance().getOceanObjects().get(i).getName() == objectChooser2.getSelectedItem()){
+						Ocean.getInstance().getOceanObjects().remove(i);
+					}
+				}
+				objectChooser2.removeItem(objectChooser2.getSelectedItem());
+				oceanTT.setText(Ocean.getInstance().plot());
 			}
 		});
         stepButton.addMouseListener(new MouseListener() {
@@ -286,21 +345,12 @@ public class OceanGUI extends JFrame {
         JLabel xLabel = new JLabel("X-Koordinate");
         JLabel yLabel = new JLabel("Y-Koordinate");
 
-        JComboBox<String> objectChooser = new JComboBox<String>();
-        objectChooser.addItem(null);
         objectChooser.addItem("Fish");
         objectChooser.addItem("Plant");
         objectChooser.addItem("Stone");
         objectChooser.addItem("Bubble");
 
-        JComboBox<OceanObject> objectChooser2 = new JComboBox<OceanObject>();
-        objectChooser.addItem(null);
-
-        SpinnerNumberModel fishSpinner = new SpinnerNumberModel(20, 0, 1000, 50);
-        JSpinner heightSpinner = new JSpinner(fishSpinner);
-
-        SpinnerNumberModel fishSpinner2 = new SpinnerNumberModel(20, 0, 1000, 50);
-        JSpinner widthSpinner = new JSpinner(fishSpinner2);
+        objectChooser2.addItem("Ralph");
 
         menu.add(loadButton);
         menu.add(startButton);
