@@ -20,8 +20,6 @@ public class Plant extends OceanObject {
 	@Override
 	public void move() {
 		// TODO Auto-generated method stub
-		//super.getPosition()[0]-=10;
-		//super.getPosition()[1]-=10;
 	}
 
 }

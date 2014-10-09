@@ -59,6 +59,11 @@ public class Ocean implements OceanInterface {
 					if(oceanObjects.get(j).getObject().equals("Plant")){
 						if(oceanObjects.get(j).getPosition()[0] == oceanObjects.get(i).getPosition()[0]){
 							if(oceanObjects.get(j).getPosition()[1] == oceanObjects.get(i).getPosition()[1]){
+								for(int o=0; o<infppGUI.OceanGUI.getDeleteBox().getItemCount();o++){
+									if(infppGUI.OceanGUI.getDeleteBox().getItemAt(o).equals(oceanObjects.get(j).getName())){
+										infppGUI.OceanGUI.getDeleteBox().removeItemAt(o);
+									}
+								}
 							oceanObjects.remove(j);
 							}
 						}

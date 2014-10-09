@@ -32,10 +32,10 @@ public class OceanGUI extends JFrame {
     
     private JLabel oceanTT;
     
-    public static JComboBox getTypeBox(){
+    public static JComboBox<String> getTypeBox(){
     	return objectChooser;
     }
-    public static JComboBox getDeleteBox(){
+    public static JComboBox<String> getDeleteBox(){
     	return objectChooser2;
     } 
     
@@ -45,10 +45,10 @@ public class OceanGUI extends JFrame {
     	objectChooser = new JComboBox<String>();
     	objectChooser2 = new JComboBox<String>();
     	
-    	SpinnerNumberModel fishSpinner = new SpinnerNumberModel(5, 0, 1000, 50);
+    	SpinnerNumberModel fishSpinner = new SpinnerNumberModel(5, 0, 1000, 5);
         heightSpinner = new JSpinner(fishSpinner);
 
-        SpinnerNumberModel fishSpinner2 = new SpinnerNumberModel(5, 0, 1000, 50);
+        SpinnerNumberModel fishSpinner2 = new SpinnerNumberModel(5, 0, 1000, 5);
         widthSpinner = new JSpinner(fishSpinner2);
 
         
