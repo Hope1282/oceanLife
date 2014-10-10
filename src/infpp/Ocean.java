@@ -52,19 +52,26 @@ public class Ocean implements OceanInterface {
 
 	public void move() {
 		// TODO Auto-generated method stub
-		for(int i=0;i<oceanObjects.size();i++){
+		int s = oceanObjects.size();
+		System.out.println(oceanObjects.size());
+		for(int i=0;i<s;i++){
 			oceanObjects.get(i).move();
+			System.out.println("i"+i);
 			if(oceanObjects.get(i).getObject() == "Fish"){
-				for(int j=0;j<oceanObjects.size();j++){
+				for(int j=0;j<s;j++){
+					System.out.println("j"+j);
 					if(oceanObjects.get(j).getObject().equals("Plant")){
+						System.out.println("Test");
 						if(oceanObjects.get(j).getPosition()[0] == oceanObjects.get(i).getPosition()[0]){
 							if(oceanObjects.get(j).getPosition()[1] == oceanObjects.get(i).getPosition()[1]){
 								for(int o=0; o<infppGUI.OceanGUI.getDeleteBox().getItemCount();o++){
+									System.out.println("o"+o);
 									if(infppGUI.OceanGUI.getDeleteBox().getItemAt(o).equals(oceanObjects.get(j).getName())){
 										infppGUI.OceanGUI.getDeleteBox().removeItemAt(o);
 									}
 								}
 							oceanObjects.remove(j);
+							s= s-1;
 							}
 						}
 					}

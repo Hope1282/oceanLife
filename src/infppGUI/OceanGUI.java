@@ -48,7 +48,7 @@ public class OceanGUI extends JFrame {
     	SpinnerNumberModel fishSpinner = new SpinnerNumberModel(5, 0, 1000, 5);
         heightSpinner = new JSpinner(fishSpinner);
 
-        SpinnerNumberModel fishSpinner2 = new SpinnerNumberModel(5, 0, 1000, 5);
+        SpinnerNumberModel fishSpinner2 = new SpinnerNumberModel(5, 0, 1000, 1);
         widthSpinner = new JSpinner(fishSpinner2);
 
         
