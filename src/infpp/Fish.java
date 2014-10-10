@@ -1,21 +1,21 @@
 package infpp;
 
 
-public class Fish1 extends OceanObject {
+public class Fish extends OceanObject {
 	
-	private boolean invX = false;
-	private boolean invY = false;
+	private boolean invX = false;//Bewegung in x-Richtung invertieren
+	private boolean invY = false;//Bewegung in y-Richtung invertieren
 
-	public Fish1() {
+	public Fish() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Fish1(int[] position, String name, String object) {
+	public Fish(int[] position, String name, String object) {
 		super(position, name, object);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Fish1(int x, int y, String name, String object) {
+	public Fish(int x, int y, String name, String object) {
 		super(x, y, name, object);
 		// TODO Auto-generated constructor stub
 	}

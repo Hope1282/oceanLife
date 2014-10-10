@@ -5,15 +5,23 @@ import infpp.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import java.io.*;
 import java.util.LinkedList;
 
 public class OceanGUI extends JFrame {
+	
+	
 
     private static final long serialVersionUID = 1L;
+    
+    
+    public static OceanGUI instance;
+    
     private JButton loadButton = new JButton("Laden");
     private JButton startButton = new JButton("Start");
     private JButton saveButton = new JButton("Speichern");
@@ -36,9 +44,28 @@ public class OceanGUI extends JFrame {
     
     private Thread thread;
     
-    private JLabel oceanTT;
+    private BufferedImage pic0;
+    private BufferedImage pic1;
+    private BufferedImage pic2;
+    private BufferedImage pic3;
+    private BufferedImage pic4;
+    
+    private static ImageIcon icon0;
+    private static ImageIcon icon1;
+    private static ImageIcon icon2;
+    private static ImageIcon icon3;
+    private static ImageIcon icon4;
+    
+   // private JLabel oceanTT;
     
     //private JFileChooser save = new JFileChooser();
+    private static JPanel oceanP;
+    public static JLabel[] pics;
+    
+    public static JPanel getOceanP(){
+		return oceanP;
+	}
+    
     
     public static JComboBox<String> getTypeBox(){
     	return objectChooser;
@@ -47,8 +74,21 @@ public class OceanGUI extends JFrame {
     	return objectChooser2;
     } 
     
-    public OceanGUI(String title, String TOcean) {
+    public static BufferedImage resize(BufferedImage image, int width, int height) {
+        BufferedImage bi = new BufferedImage(width, height, BufferedImage.TRANSLUCENT);
+        Graphics2D g2d = (Graphics2D) bi.createGraphics();
+        g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY));
+        g2d.drawImage(image, 0, 0, width, height, null);
+        g2d.dispose();
+        return bi;
+    }
+    
+    
+    
+    public OceanGUI(String title/*, String TOcean*/) {
     	super(title);
+    	
+    	this.setSize(Ocean.getInstance().getWidth(), Ocean.getInstance().getDepth()+100);
     	
     	objectChooser = new JComboBox<String>();
     	objectChooser2 = new JComboBox<String>();
@@ -68,15 +108,50 @@ public class OceanGUI extends JFrame {
          			try{
          				Thread.sleep(100);
          				Ocean.getInstance().move();
-         				oceanTT.setText(Ocean.getInstance().plot());
+         				//oceanTT.setText(Ocean.getInstance().plot());
          			}catch(InterruptedException ex){	
          			}
          		}
          	}
          }
     	
-        ImageIcon pic = new ImageIcon("src/3.jpg");
-        //ImageIcon pic2 = new ImageIcon("src/fish0.png");
+    	 try {
+ 			pic0 = ImageIO.read(new File("src/infppGUI/3.jpg"));
+ 		} catch (IOException e1) {
+ 			System.err.println("err");
+ 		}
+        try {
+			pic1 = ImageIO.read(new File("src/infppGUI/fish0.png"));
+		} catch (IOException e1) {
+			System.err.println("err");
+		}
+        try {
+			pic2 = ImageIO.read(new File("src/infppGUI/Quarried_stone.png"));
+		} catch (IOException e1) {
+			System.err.println("err");
+		}
+        try {
+			pic3 = ImageIO.read(new File("src/infppGUI/seaweed.png"));
+		} catch (IOException e1) {
+			System.err.println("err");
+		}
+        try {
+			pic4 = ImageIO.read(new File("src/infppGUI/bubble.png"));
+		} catch (IOException e1) {
+			System.err.println("err");
+		}
+        
+        pic0 = resize(pic0,Ocean.getInstance().getWidth(),Ocean.getInstance().getDepth());
+        pic1 = resize(pic1, 50, 50);
+        pic2 = resize(pic2,50,50);
+        pic3 = resize(pic3,50,50);
+        pic4 = resize(pic4,50,50);
+        
+        icon0 = new ImageIcon(pic0);
+        icon1 = new ImageIcon(pic1);
+        icon2 = new ImageIcon(pic2);
+        icon3 = new ImageIcon(pic3);
+        icon4 = new ImageIcon(pic4);
         
         JPanel menu = new JPanel();
         loadButton.addMouseListener(new MouseListener() {
@@ -124,7 +199,7 @@ public class OceanGUI extends JFrame {
 					System.err.println("Class Error");
 				}
 				
-				oceanTT.setText(Ocean.getInstance().plot());
+				//oceanTT.setText(Ocean.getInstance().plot());
 			}
 		});
         startButton.addMouseListener(new MouseListener() {
@@ -292,7 +367,7 @@ public class OceanGUI extends JFrame {
 	            		int x = (Integer)widthSpinner.getValue();
 	            		int y = (Integer)heightSpinner.getValue();
 	            		if(objectChooser.getSelectedItem()==objectChooser.getItemAt(0)){
-	            			infpp.Ocean.getInstance().getOceanObjects().add(new Fish1(x,y,objectName,"Fish"));
+	            			infpp.Ocean.getInstance().getOceanObjects().add(new Fish(x,y,objectName,"Fish"));
 	            		}
 	            		if(objectChooser.getSelectedItem()==objectChooser.getItemAt(1)){
 	            			infpp.Ocean.getInstance().getOceanObjects().add(new Plant(x,y,objectName,"Plant"));
@@ -306,7 +381,7 @@ public class OceanGUI extends JFrame {
 	            		objectChooser2.addItem(objectName);
 	            		stop = true;
 	            	}
-	            	oceanTT.setText(Ocean.getInstance().plot());
+	            	//oceanTT.setText(Ocean.getInstance().plot());
 	            }
             }
         });
@@ -345,7 +420,7 @@ public class OceanGUI extends JFrame {
 					}
 				}
 				objectChooser2.removeItem(objectChooser2.getSelectedItem());
-				oceanTT.setText(Ocean.getInstance().plot());
+				//oceanTT.setText(Ocean.getInstance().plot());
 			}
 		});
         stepButton.addMouseListener(new MouseListener() {
@@ -378,7 +453,7 @@ public class OceanGUI extends JFrame {
 			public void mouseClicked(MouseEvent ar) {
 				// TODO Auto-generated method stub
 				infpp.Ocean.getInstance().move();
-				oceanTT.setText(Ocean.getInstance().plot());
+				//oceanTT.setText(Ocean.getInstance().plot());
 			}
 		});
         JLabel xLabel = new JLabel("X-Koordinate");
@@ -390,6 +465,8 @@ public class OceanGUI extends JFrame {
         objectChooser.addItem("Bubble");
 
         objectChooser2.addItem("Ralph");
+        
+        
 
         menu.add(loadButton);
         menu.add(startButton);
@@ -406,21 +483,48 @@ public class OceanGUI extends JFrame {
         menu.add(delButton);
         menu.add(stepButton);
         menu.setLayout(new GridLayout(2, 7));
-        JPanel oceanT = new JPanel();
+        menu.setBounds(0,0,Ocean.getInstance().getWidth(),100);
+        
+        /*JPanel oceanT = new JPanel();
         oceanTT = new JLabel(TOcean);
-        oceanT.add(oceanTT);
-        JPanel oceanP = new JPanel();
-        JLabel oceanPP = new JLabel(pic);
-        //JLabel fish0 = new JLabel().fill(pic2);
-        oceanP.add(oceanPP);
-        //oceanP.add(fish0);
+        oceanT.add(oceanTT);*/
+        
+        oceanP = new JPanel();
+        
+        pics = new JLabel[Ocean.getInstance().getOceanObjects().size()+1];
+        for(int i =0; i<Ocean.getInstance().getOceanObjects().size();i++){
+        	if(Ocean.getInstance().getOceanObjects().get(i).getObject().equals("Fish")){
+        		pics[i]  = new JLabel(icon1);
+        		oceanP.add(pics[i]);
+        		pics[i].setBounds(Ocean.getInstance().getOceanObjects().get(i).getPosition()[0], Ocean.getInstance().getOceanObjects().get(i).getPosition()[1]+100, 50, 50);
+        	} else if(Ocean.getInstance().getOceanObjects().get(i).getObject().equals("Stone")){
+        		pics[i]  = new JLabel(icon2);
+        		oceanP.add(pics[i]);
+        		pics[i].setBounds(Ocean.getInstance().getOceanObjects().get(i).getPosition()[0], Ocean.getInstance().getOceanObjects().get(i).getPosition()[1]+100, 50, 50);
+        	} else if(Ocean.getInstance().getOceanObjects().get(i).getObject().equals("Plant")){
+        		pics[i]  = new JLabel(icon3);
+        		oceanP.add(pics[i]);
+        		pics[i].setBounds(Ocean.getInstance().getOceanObjects().get(i).getPosition()[0], Ocean.getInstance().getOceanObjects().get(i).getPosition()[1]+100, 50, 50);
+        	} else if(Ocean.getInstance().getOceanObjects().get(i).getObject().equals("Bubble")){
+    			pics[i]  = new JLabel(icon4);
+    			oceanP.add(pics[i]);
+    			pics[i].setBounds(Ocean.getInstance().getOceanObjects().get(i).getPosition()[0], Ocean.getInstance().getOceanObjects().get(i).getPosition()[1]+100, 50, 50);
+        	}
+        }
+       
+        
+        pics[Ocean.getInstance().getOceanObjects().size()] = new JLabel(icon0);
+        oceanP.add(pics[Ocean.getInstance().getOceanObjects().size()]);
+        pics[Ocean.getInstance().getOceanObjects().size()].setBounds(0, 100, Ocean.getInstance().getWidth(), Ocean.getInstance().getDepth());
+        
         oceanP.setLayout(null);
-        oceanPP.setBounds(0, 0, Ocean.getInstance().getWidth(), Ocean.getInstance().getDepth());
-        //fish0.setBounds(200, 200, 100, 100);
+        oceanP.setBounds(0,100,Ocean.getInstance().getWidth(), Ocean.getInstance().getDepth());
+        
+        
         add(menu);
         add(oceanP);
-        add(oceanT);
-        setLayout(new GridLayout(2, 2));
+        //add(oceanT);
+        //setLayout(new GridLayout(2, 1));
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 }

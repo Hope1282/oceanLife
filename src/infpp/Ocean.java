@@ -2,8 +2,10 @@ package infpp;
 
 import java.util.LinkedList;
 
+import javax.swing.SwingUtilities;
+
 public class Ocean implements OceanInterface {
-	public static Ocean instance;
+	public static Ocean instance;//Instanziiere Ocean
 	private int Width, Depth;
 	private LinkedList<OceanObject> oceanObjects;
 	
@@ -78,6 +80,9 @@ public class Ocean implements OceanInterface {
 				}
 			}
 		}
+		//infppGUI.OceanGUI.getOceanP().removeAll();
+		//infppGUI.OceanGUI.getOceanP().revalidate();
+		//infppGUI.OceanGUI.getOceanP().repaint();
 	}
 	public String toString(){
 		String ob="";
@@ -87,7 +92,7 @@ public class Ocean implements OceanInterface {
 		String str= "Ocean: Width: "+this.Width+" Depth: "+this.Depth+"\nObjects:"+ob+"\n";
 		return str;
 	}
-	public String plot(){
+	/*public String plot(){
 		String str1 = "";
 		String str2 = "";
 		for(int i=0;i<this.Width;i++){
@@ -115,7 +120,7 @@ public class Ocean implements OceanInterface {
 			str2 =str2 + "<br>";
 		}
 		return "<html>"+str1+"<br>"+str2+str1+"</html>";
-	}
+	}*/
 
 
 	public static synchronized Ocean getInstance() {
