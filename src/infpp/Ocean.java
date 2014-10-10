@@ -57,7 +57,7 @@ public class Ocean implements OceanInterface {
 		for(int i=0;i<s;i++){
 			oceanObjects.get(i).move();
 			System.out.println("i"+i);
-			if(oceanObjects.get(i).getObject() == "Fish"){
+			if(oceanObjects.get(i).getObject().equals("Fish")){
 				for(int j=0;j<s;j++){
 					System.out.println("j"+j);
 					if(oceanObjects.get(j).getObject().equals("Plant")){

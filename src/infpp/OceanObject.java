@@ -1,6 +1,12 @@
 package infpp;
 
-public abstract class OceanObject {
+import java.io.Serializable;
+
+public abstract class OceanObject implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int[] position = new int[2];
 	private String name;
 	private String object;

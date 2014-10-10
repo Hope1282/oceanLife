@@ -8,6 +8,9 @@ import java.awt.event.MouseListener;
 
 import javax.swing.*;
 
+import java.io.*;
+import java.util.LinkedList;
+
 public class OceanGUI extends JFrame {
 
     private static final long serialVersionUID = 1L;
@@ -20,6 +23,9 @@ public class OceanGUI extends JFrame {
     private JButton delButton = new JButton("Entfernen");
     private JButton stepButton = new JButton("Step");
     
+    LinkedList<OceanObject> oceanLoad;
+    LinkedList<OceanObject> oceanSave;
+    
     private static JComboBox<String> objectChooser;
     private static JComboBox<String> objectChooser2;
     
@@ -31,6 +37,8 @@ public class OceanGUI extends JFrame {
     private Thread thread;
     
     private JLabel oceanTT;
+    
+    //private JFileChooser save = new JFileChooser();
     
     public static JComboBox<String> getTypeBox(){
     	return objectChooser;
@@ -98,7 +106,18 @@ public class OceanGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				
+				String fileName = JOptionPane.showInputDialog("Enter file name");
+				try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName+".ser"))){
+					infpp.Ocean.getInstance().getOceanObjects().clear();
+					oceanLoad = (LinkedList<OceanObject>) in.readObject();
+					Ocean.getInstance().setOceanObjects(oceanLoad);
+					in.close();
+				} catch (IOException i){
+					System.err.println("OI Error");
+				} catch(ClassNotFoundException c){
+					System.err.println("Class Error");
+				}
+				oceanTT.setText(Ocean.getInstance().plot());
 			}
 		});
         startButton.addMouseListener(new MouseListener() {
@@ -165,7 +184,14 @@ public class OceanGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				
+			    oceanSave = infpp.Ocean.getInstance().getOceanObjects();
+				String fileName = JOptionPane.showInputDialog("Enter file name");
+			    try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName+".ser"))){
+			    	out.writeObject(oceanSave);
+			    	out.close();
+			    } catch (IOException i){
+			    	System.err.println("Invalide");
+			    }
 			}
 		});
         stopButton.addMouseListener(new MouseListener() {
