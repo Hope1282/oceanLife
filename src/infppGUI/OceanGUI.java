@@ -76,6 +76,7 @@ public class OceanGUI extends JFrame {
          }
     	
         ImageIcon pic = new ImageIcon("src/3.jpg");
+        
         JPanel menu = new JPanel();
         loadButton.addMouseListener(new MouseListener() {
 			
@@ -111,12 +112,17 @@ public class OceanGUI extends JFrame {
 					infpp.Ocean.getInstance().getOceanObjects().clear();
 					oceanLoad = (LinkedList<OceanObject>) in.readObject();
 					Ocean.getInstance().setOceanObjects(oceanLoad);
+					objectChooser2. removeAllItems();
+					for(int i=0; i<oceanLoad.size();i++){
+						objectChooser2.addItem(oceanLoad.get(i).getName());
+					}
 					in.close();
 				} catch (IOException i){
 					System.err.println("OI Error");
 				} catch(ClassNotFoundException c){
 					System.err.println("Class Error");
 				}
+				
 				oceanTT.setText(Ocean.getInstance().plot());
 			}
 		});
