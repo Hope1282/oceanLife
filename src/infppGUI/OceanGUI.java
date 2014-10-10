@@ -76,6 +76,7 @@ public class OceanGUI extends JFrame {
          }
     	
         ImageIcon pic = new ImageIcon("src/3.jpg");
+        //ImageIcon pic2 = new ImageIcon("src/fish0.png");
         
         JPanel menu = new JPanel();
         loadButton.addMouseListener(new MouseListener() {
@@ -410,7 +411,12 @@ public class OceanGUI extends JFrame {
         oceanT.add(oceanTT);
         JPanel oceanP = new JPanel();
         JLabel oceanPP = new JLabel(pic);
+        //JLabel fish0 = new JLabel().fill(pic2);
         oceanP.add(oceanPP);
+        //oceanP.add(fish0);
+        oceanP.setLayout(null);
+        oceanPP.setBounds(0, 0, Ocean.getInstance().getWidth(), Ocean.getInstance().getDepth());
+        //fish0.setBounds(200, 200, 100, 100);
         add(menu);
         add(oceanP);
         add(oceanT);
