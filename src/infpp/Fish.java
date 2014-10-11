@@ -19,16 +19,14 @@ public class Fish extends OceanObject {
 		super(x, y, name, object);
 		// TODO Auto-generated constructor stub
 	}
-
-	@Override
-	public void move() {
-		// TODO Auto-generated method stub
-		if(super.getPosition()[0] == Ocean.getInstance().getWidth()-1){
+	
+	public void swim() {
+		if(super.getPosition()[0] == Ocean.getInstance().getWidth()-71){
 			invX = true;
 		} else if(super.getPosition()[0] == 0){
 			invX = false;
 		}
-		if(super.getPosition()[1] == Ocean.getInstance().getDepth()-1){
+		if(super.getPosition()[1] == Ocean.getInstance().getDepth()-71){
 			invY = true;
 		} else if(super.getPosition()[1] == 0){
 			invY = false;
@@ -43,6 +41,20 @@ public class Fish extends OceanObject {
 		} else {
 			super.getPosition()[1]+=1;
 		}
+	}
+	
+	public void move() {
+		// TODO Auto-generated method stub
+		this.swim();
+		this.swim();
+		this.swim();
+		this.swim();
+		this.swim();
+		this.swim();
+		this.swim();
+		this.swim();
+		this.swim();
+		this.swim();
 	}
 
 }
