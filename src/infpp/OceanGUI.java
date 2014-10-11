@@ -1,4 +1,4 @@
-package infppGUI;
+package infpp;
 
 import infpp.*;
 
@@ -141,27 +141,27 @@ public class OceanGUI extends JFrame {
          }
     	
     	 try {
- 			pic0 = ImageIO.read(new File("src/infppGUI/3.jpg"));
+ 			pic0 = ImageIO.read(new File("src/3.jpg"));
  		} catch (IOException e1) {
  			System.err.println("err");
  		}
         try {
-			pic1 = ImageIO.read(new File("src/infppGUI/fish0.png"));
+			pic1 = ImageIO.read(new File("src/fish0.png"));
 		} catch (IOException e1) {
 			System.err.println("err");
 		}
         try {
-			pic2 = ImageIO.read(new File("src/infppGUI/Quarried_stone.png"));
+			pic2 = ImageIO.read(new File("src/Quarried_stone.png"));
 		} catch (IOException e1) {
 			System.err.println("err");
 		}
         try {
-			pic3 = ImageIO.read(new File("src/infppGUI/seaweed.png"));
+			pic3 = ImageIO.read(new File("src/seaweed.png"));
 		} catch (IOException e1) {
 			System.err.println("err");
 		}
         try {
-			pic4 = ImageIO.read(new File("src/infppGUI/bubble.png"));
+			pic4 = ImageIO.read(new File("src/bubble.png"));
 		} catch (IOException e1) {
 			System.err.println("err");
 		}
@@ -218,8 +218,8 @@ public class OceanGUI extends JFrame {
 						for(int i=0; i<oceanLoad.size();i++){
 							objectChooser2.addItem(oceanLoad.get(i).getName());
 						}
-						infppGUI.OceanGUI.getOceanP().removeAll();
-						infppGUI.OceanGUI.build();
+						infpp.OceanGUI.getOceanP().removeAll();
+						infpp.OceanGUI.build();
 						in.close();
 					} catch (IOException i){
 						System.err.println("OI Error");
@@ -414,8 +414,8 @@ public class OceanGUI extends JFrame {
 	            /*} catch (IOException ex) {
 	            	JOptionPane.showMessageDialog(null,"error","error",JOptionPane.ERROR_MESSAGE);
 	            }*/
-	            infppGUI.OceanGUI.getOceanP().removeAll();
-	        	infppGUI.OceanGUI.build();
+	            infpp.OceanGUI.getOceanP().removeAll();
+	        	infpp.OceanGUI.build();
 	            //oceanTT.setText(Ocean.getInstance().plot());
 	            
             	}
@@ -455,8 +455,8 @@ public class OceanGUI extends JFrame {
 					}
 				}
 				objectChooser2.removeItem(objectChooser2.getSelectedItem());
-				infppGUI.OceanGUI.getOceanP().removeAll();
-				infppGUI.OceanGUI.build();
+				infpp.OceanGUI.getOceanP().removeAll();
+				infpp.OceanGUI.build();
 				//oceanTT.setText(Ocean.getInstance().plot());
 			}
 		});

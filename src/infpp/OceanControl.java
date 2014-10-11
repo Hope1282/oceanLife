@@ -25,7 +25,7 @@ public class OceanControl {
         System.out.println(ocean.plot());
         System.out.println(ocean);
         System.out.println(ocean.plot());*/
-        infppGUI.OceanGUI gui = new infppGUI.OceanGUI("Ocean"/*, ocean.plot()*/);
+        infpp.OceanGUI gui = new infpp.OceanGUI("Ocean"/*, ocean.plot()*/);
         gui.setLocation(0, 0);
         //gui.pack();
         gui.setVisible(true);

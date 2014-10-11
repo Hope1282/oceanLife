@@ -62,9 +62,9 @@ public class Ocean implements OceanInterface {
 					if(oceanObjects.get(j).getObject().equals("Plant")){
 						if(oceanObjects.get(j).getPosition()[0] < oceanObjects.get(i).getPosition()[0]+50 && oceanObjects.get(j).getPosition()[0] > oceanObjects.get(i).getPosition()[0]-50){
 							if(oceanObjects.get(j).getPosition()[1] < oceanObjects.get(i).getPosition()[1]+50 && oceanObjects.get(j).getPosition()[1] > oceanObjects.get(i).getPosition()[1]-50){
-								for(int o=0; o<infppGUI.OceanGUI.getDeleteBox().getItemCount();o++){
-									if(infppGUI.OceanGUI.getDeleteBox().getItemAt(o).equals(oceanObjects.get(j).getName())){
-										infppGUI.OceanGUI.getDeleteBox().removeItemAt(o);
+								for(int o=0; o<infpp.OceanGUI.getDeleteBox().getItemCount();o++){
+									if(infpp.OceanGUI.getDeleteBox().getItemAt(o).equals(oceanObjects.get(j).getName())){
+										infpp.OceanGUI.getDeleteBox().removeItemAt(o);
 									}
 								}
 							oceanObjects.remove(j);
@@ -77,19 +77,19 @@ public class Ocean implements OceanInterface {
 			if(oceanObjects.get(i).getObject().equals("Bubble")){
 				if(oceanObjects.get(i).getPosition()[1]<=0){
 					int b = -1;
-					for(int j=0; j<infppGUI.OceanGUI.getDeleteBox().getItemCount();j++){
-						if(infppGUI.OceanGUI.getDeleteBox().getItemAt(j).equals(oceanObjects.get(i).getName())){
+					for(int j=0; j<infpp.OceanGUI.getDeleteBox().getItemCount();j++){
+						if(infpp.OceanGUI.getDeleteBox().getItemAt(j).equals(oceanObjects.get(i).getName())){
 							b = j;//Aus der Auswahlliste entfernen, falls die Oberkante erreicht wird
 						}
 					}
-					infppGUI.OceanGUI.getDeleteBox().removeItemAt(b);
+					infpp.OceanGUI.getDeleteBox().removeItemAt(b);
 					oceanObjects.remove(i);
 					s = s-1;
 				}
 			}
 		}
-		infppGUI.OceanGUI.getOceanP().removeAll();
-		infppGUI.OceanGUI.build();
+		infpp.OceanGUI.getOceanP().removeAll();
+		infpp.OceanGUI.build();
 	}
 	public String toString(){
 		String ob="";
