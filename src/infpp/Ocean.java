@@ -5,10 +5,13 @@ import java.util.LinkedList;
 import javax.swing.SwingUtilities;
 
 public class Ocean implements OceanInterface {
-	public static Ocean instance;//Instanziiere Ocean
+	
+	/**Instanziiere Ocean, ind initiiere die Parameter Width, Depth und die LinkedList oceanObjects*/
+	public static Ocean instance;
 	private int Width, Depth;
 	private LinkedList<OceanObject> oceanObjects;
 	
+	/**Konstruiere Ocean mit gegebenen Parametern*/
 	Ocean (int width , int depth , LinkedList <OceanObject> oceanObjects ){
 		this.Width= width;
 		this.Depth=depth;
@@ -16,80 +19,77 @@ public class Ocean implements OceanInterface {
 	}
 	
 
-	@Override
 	public int getWidth() {
-		// TODO Auto-generated method stub
 		return this.Width;
 	}
 
-	@Override
 	public void setWidth(int width) {
-		// TODO Auto-generated method stub
 		this.Width = width;
 	}
 
-	@Override
 	public int getDepth() {
-		// TODO Auto-generated method stub
 		return this.Depth;
 	}
 
-	@Override
 	public void setDepth(int depth) {
-		// TODO Auto-generated method stub
 		this.Depth = depth;
 	}
 
-	@Override
 	public LinkedList<OceanObject> getOceanObjects() {
-		// TODO Auto-generated method stub
 		return this.oceanObjects;
 	}
 
-	@Override
 	public void setOceanObjects(LinkedList<OceanObject> oceanObjects) {
-		// TODO Auto-generated method stub
 		this.oceanObjects = oceanObjects;
 	}
-
+	
+	public static synchronized Ocean getInstance() {
+		if (instance == null) {
+			instance = new Ocean(20, 20, new LinkedList<OceanObject>());
+		}
+		return instance;
+	}
+	
+	/**Ruft die move-Methoden der einzelnen OceanObject-Objecte auf 
+	 * und laesst bestimmt objekte interagieren.
+	 */
 	public void move() {
-		// TODO Auto-generated method stub
 		int s = oceanObjects.size();
-		for(int i=0;i<s;i++){
-			oceanObjects.get(i).move();
-			if(oceanObjects.get(i).getObject().equals("Fish")){
-				for(int j=0;j<s;j++){
-					if(oceanObjects.get(j).getObject().equals("Plant")){
-						if(oceanObjects.get(j).getPosition()[0] < oceanObjects.get(i).getPosition()[0]+50 && oceanObjects.get(j).getPosition()[0] > oceanObjects.get(i).getPosition()[0]-50){
-							if(oceanObjects.get(j).getPosition()[1] < oceanObjects.get(i).getPosition()[1]+50 && oceanObjects.get(j).getPosition()[1] > oceanObjects.get(i).getPosition()[1]-50){
-								for(int o=0; o<infpp.OceanGUI.getDeleteBox().getItemCount();o++){
-									if(infpp.OceanGUI.getDeleteBox().getItemAt(o).equals(oceanObjects.get(j).getName())){
-										infpp.OceanGUI.getDeleteBox().removeItemAt(o);
+		for(int i=0;i<s;i++){//gehe OceanObjects durch
+			oceanObjects.get(i).move();//Bewege die OceanObject-Objekte
+			if(oceanObjects.get(i).getObject().equals("Fish")){//suche nach Fish-Objekten
+				for(int j=0;j<s;j++){//gehen die OceanObjects ein weiteres mal durch
+					if(oceanObjects.get(j).getObject().equals("Plant")){//suche nach Plant-Objekten
+						if(oceanObjects.get(j).getPosition()[0] < oceanObjects.get(i).getPosition()[0]+50 && oceanObjects.get(j).getPosition()[0] > oceanObjects.get(i).getPosition()[0]-50){//Vergleiche X-Koordinaten 
+							if(oceanObjects.get(j).getPosition()[1] < oceanObjects.get(i).getPosition()[1]+50 && oceanObjects.get(j).getPosition()[1] > oceanObjects.get(i).getPosition()[1]-50){//Vergleiche Y-Koordinaten
+								for(int o=0; o<infpp.OceanGUI.getDeleteBox().getItemCount();o++){//Gehe die Eintraege in der Delete-Liste der GUI durch
+									if(infpp.OceanGUI.getDeleteBox().getItemAt(o).equals(oceanObjects.get(j).getName())){//Vergleiche die Objektnamen
+										infpp.OceanGUI.getDeleteBox().removeItemAt(o);//Entferne den Listeneintrag
 									}
 								}
-							oceanObjects.remove(j);
-							s= s-1;
+							oceanObjects.remove(j);//Entferne das Objekt
+							s= s-1;// Verringere den Objektzaehler s um 1
 							}
 						}
 					}
 				}
 			}
-			if(oceanObjects.get(i).getObject().equals("Bubble")){
-				if(oceanObjects.get(i).getPosition()[1]<=0){
+			if(oceanObjects.get(i).getObject().equals("Bubble")){//Suche nach Bubble-Objekten
+				if(oceanObjects.get(i).getPosition()[1]<=0){//Ueberpruefe deren Position
 					int b = -1;
 					for(int j=0; j<infpp.OceanGUI.getDeleteBox().getItemCount();j++){
 						if(infpp.OceanGUI.getDeleteBox().getItemAt(j).equals(oceanObjects.get(i).getName())){
-							b = j;//Aus der Auswahlliste entfernen, falls die Oberkante erreicht wird
+							b = j;//Merke, an welcher Stelle der Delete-Liste sich die Bubble befindet
 						}
 					}
-					infpp.OceanGUI.getDeleteBox().removeItemAt(b);
-					oceanObjects.remove(i);
-					s = s-1;
+					infpp.OceanGUI.getDeleteBox().removeItemAt(b);//entferne die Bubble aus der Delete-Liste der GUI
+					oceanObjects.remove(i);//Entferne Objekt
+					s = s-1;// Verringere den Objektzaehler s um 1
 				}
 			}
 		}
 		infpp.OceanGUI.getOceanP().removeAll();
-		infpp.OceanGUI.build();
+		infpp.OceanGUI.build();//Update der GUI
 	}
 	public String toString(){
 		String ob="";
@@ -99,6 +99,12 @@ public class Ocean implements OceanInterface {
 		String str= "Ocean: Width: "+this.Width+" Depth: "+this.Depth+"\nObjects:"+ob+"\n";
 		return str;
 	}
+	
+	/**Provisorische Methode, die den Ocean als String erstellt.
+	 * wurde im fruehen Programmierstadium verwendet, und hat nun keine aktive Rolle mehr.
+	 * Ist relativ rechenaufwaendig.
+	 * @return
+	 */
 	/*public String plot(){
 		String str1 = "";
 		String str2 = "";
@@ -129,12 +135,5 @@ public class Ocean implements OceanInterface {
 		return "<html>"+str1+"<br>"+str2+str1+"</html>";
 	}*/
 
-
-	public static synchronized Ocean getInstance() {
-		if (instance == null) {
-			instance = new Ocean(20, 20, new LinkedList<OceanObject>());
-		}
-		return instance;
-	}
 
 }

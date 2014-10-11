@@ -3,8 +3,8 @@ package infpp;
 
 public class Stone extends OceanObject {
 
+	/**Erbt Konstuktoren von OceanObject*/
 	public Stone() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Stone(int[] position, String name, String object) {
@@ -17,14 +17,10 @@ public class Stone extends OceanObject {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public void move() {
-		// TODO Auto-generated method stub
-		this.sink();
-		this.sink();
-		this.sink();
-		this.sink();
-	}
+	/**Sink laesst den Stein nur dann eine bewegung ausfueren,
+	 * wenn er sich nicht am unteren Ende des Ocean befindet,
+	 * und auch keine anderen Steine unter ihm sind
+	 */
 	public void sink() {
 		boolean fall = true;
 		if(super.getPosition()[1]<Ocean.getInstance().getDepth()-100){
@@ -42,6 +38,15 @@ public class Stone extends OceanObject {
 			}
 		}
 		
+	}
+	
+	/**Bewegt Stone immer nur um einen pixel weiter, um zu verhindern,
+	 *  dass er z.B. den Rand des Ocean ueberspringt*/
+	public void move() {
+		this.sink();
+		this.sink();
+		this.sink();
+		this.sink();
 	}
 
 }

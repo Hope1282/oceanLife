@@ -3,23 +3,24 @@ package infpp;
 
 public class Fish extends OceanObject {
 	
-	private boolean invX = false;//Bewegung in x-Richtung invertieren
-	private boolean invY = false;//Bewegung in y-Richtung invertieren
+	/**Bewegung in x-Richtung invertieren*/
+	private boolean invX = false;
+	/**Bewegung in y-Richtung invertieren*/
+	private boolean invY = false;
 
+	/**Erbt Konstruktoren von Oceanobject*/
 	public Fish() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Fish(int[] position, String name, String object) {
 		super(position, name, object);
-		// TODO Auto-generated constructor stub
 	}
 
 	public Fish(int x, int y, String name, String object) {
 		super(x, y, name, object);
-		// TODO Auto-generated constructor stub
 	}
 	
+	/**Dreht um, wenn er an eine Wand stoesst*/
 	public void swim() {
 		if(super.getPosition()[0] == Ocean.getInstance().getWidth()-71){
 			invX = true;
@@ -43,8 +44,9 @@ public class Fish extends OceanObject {
 		}
 	}
 	
+	/**Bewegt Fish immer nur um einen pixel weiter, um zu verhindern,
+	 *  dass er z.B. den Rand des Ocean ueberspringt*/
 	public void move() {
-		// TODO Auto-generated method stub
 		this.swim();
 		this.swim();
 		this.swim();

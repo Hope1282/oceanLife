@@ -11,7 +11,6 @@ public interface OceanInterface {
 	public LinkedList<OceanObject> getOceanObjects();
 	public void setOceanObjects(LinkedList<OceanObject> oceanObjects);
 	public void move();
-	@Override
 	public String toString();
 
 }

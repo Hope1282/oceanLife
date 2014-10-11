@@ -15,6 +15,7 @@ import java.util.LinkedList;
 
 public class OceanGUI extends JFrame {
 	
+	/**Initiiere eine Vielzahl von Objekten, einige mit Hilfe von swing oder awt.*/
 	
 
     private static final long serialVersionUID = 1L;
@@ -27,7 +28,7 @@ public class OceanGUI extends JFrame {
     private JButton saveButton = new JButton("Speichern");
     private JButton stopButton = new JButton("Stop");
     private JButton quitButton = new JButton("Quit");
-    private JButton pasteButton = new JButton("Einfuegen");
+    private JButton addButton = new JButton("Einfuegen");
     private JButton delButton = new JButton("Entfernen");
     private JButton stepButton = new JButton("Step");
     
@@ -35,7 +36,7 @@ public class OceanGUI extends JFrame {
     LinkedList<OceanObject> oceanSave;
     
     private static JComboBox<String> objectChooser;
-    private static JComboBox<String> objectChooser2;
+    private static JComboBox<String> deleteList;
     
     private JSpinner heightSpinner;
     private JSpinner widthSpinner;
@@ -56,9 +57,6 @@ public class OceanGUI extends JFrame {
     private static ImageIcon icon3;
     private static ImageIcon icon4;
     
-   // private JLabel oceanTT;
-    
-    //private JFileChooser save = new JFileChooser();
     private static JPanel oceanP;
     public static JLabel[] pics;
     
@@ -66,6 +64,10 @@ public class OceanGUI extends JFrame {
 		return oceanP;
 	}
     
+    /**Build ist quasi der Kern der GUI. Die Methode erstellt fuer jedes OceanObject ein neues Label in einem Label-Array
+     * Es fuegt dieses danach den oceanP Panel hinzu und passt ihre Groesse an.
+     * Ausserdem laed sie das Hntergrundbild fuer die GUI.
+     */
     public static void build(){
     	pics = new JLabel[Ocean.getInstance().getOceanObjects().size()+1];
         for(int i =0; i<Ocean.getInstance().getOceanObjects().size();i++){
@@ -96,9 +98,16 @@ public class OceanGUI extends JFrame {
     	return objectChooser;
     }
     public static JComboBox<String> getDeleteBox(){
-    	return objectChooser2;
+    	return deleteList;
     } 
     
+    /**Diese Methode ermoeglicht das Aendern der groesse eines BufferedImage.
+     * 
+     * @param image
+     * @param width
+     * @param height
+     * @return
+     */
     public static BufferedImage resize(BufferedImage image, int width, int height) {
         BufferedImage bi = new BufferedImage(width, height, BufferedImage.TRANSLUCENT);
         Graphics2D g2d = (Graphics2D) bi.createGraphics();
@@ -109,23 +118,26 @@ public class OceanGUI extends JFrame {
     }
     
     
-    
-    public OceanGUI(String title/*, String TOcean*/) {
+    /**Der Konstruktor der GUI enthaelt vor allem die add methoden fuer die bereits initiierten Objekte.
+     * Ausserdem finden sich hier die Button-Listener in fprm von Anonymen Klassen.
+     * @param title
+     */
+    public OceanGUI(String title) {
     	super(title);
     	
     	this.setSize(Ocean.getInstance().getWidth(), Ocean.getInstance().getDepth()+100);
     	
     	objectChooser = new JComboBox<String>();
-    	objectChooser2 = new JComboBox<String>();
+    	deleteList = new JComboBox<String>();
     	
-    	SpinnerNumberModel fishSpinner = new SpinnerNumberModel(5, 0, 1000, 5);
+    	SpinnerNumberModel fishSpinner = new SpinnerNumberModel(0, 0, Ocean.getInstance().getDepth()-51, 50);
         heightSpinner = new JSpinner(fishSpinner);
 
-        SpinnerNumberModel fishSpinner2 = new SpinnerNumberModel(5, 0, 1000, 1);
+        SpinnerNumberModel fishSpinner2 = new SpinnerNumberModel(0, 0, Ocean.getInstance().getWidth()-51, 50);
         widthSpinner = new JSpinner(fishSpinner2);
 
         
-        
+        /**Nebenlaeufiger Thread, der die move-Methode wiederholt ausfuehrt*/
     	 class GoOn implements Runnable {
          	
          	public void run(){
@@ -133,13 +145,13 @@ public class OceanGUI extends JFrame {
          			try{
          				Thread.sleep(100);
          				Ocean.getInstance().move();
-         				//oceanTT.setText(Ocean.getInstance().plot());
          			}catch(InterruptedException ex){	
          			}
          		}
          	}
          }
     	
+    	 /**Lade verschiedene Bilddateien*/
     	 try {
  			pic0 = ImageIO.read(new File("src/3.jpg"));
  		} catch (IOException e1) {
@@ -166,12 +178,14 @@ public class OceanGUI extends JFrame {
 			System.err.println("err");
 		}
         
+        /**Passe die groesse dieser Biddateien an*/
         pic0 = resize(pic0,Ocean.getInstance().getWidth(),Ocean.getInstance().getDepth());
         pic1 = resize(pic1, 50, 50);
         pic2 = resize(pic2,50,50);
         pic3 = resize(pic3,50,50);
         pic4 = resize(pic4,50,50);
         
+        /**Erstelle aus den eingelesenen Bilddateien Icons*/
         icon0 = new ImageIcon(pic0);
         icon1 = new ImageIcon(pic1);
         icon2 = new ImageIcon(pic2);
@@ -179,6 +193,9 @@ public class OceanGUI extends JFrame {
         icon4 = new ImageIcon(pic4);
         
         JPanel menu = new JPanel();
+        
+        /**Listener sind automatisch generiert, nur die on-Click Listener wurden verwendet*/
+        
         loadButton.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -206,17 +223,18 @@ public class OceanGUI extends JFrame {
 			}
 			
 			@Override
+			/**Lade vorher gespeicherte datei mit angegebenem Dateinamen aus src-Ordner
+			 * und aktualisiere die GUI.*/
 			public void mouseClicked(MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				String fileName = JOptionPane.showInputDialog("Enter file name");
 				if(fileName != null){
 					try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName+".ser"))){
 						infpp.Ocean.getInstance().getOceanObjects().clear();
 						oceanLoad = (LinkedList<OceanObject>) in.readObject();
 						Ocean.getInstance().setOceanObjects(oceanLoad);
-						objectChooser2. removeAllItems();
+						deleteList. removeAllItems();
 						for(int i=0; i<oceanLoad.size();i++){
-							objectChooser2.addItem(oceanLoad.get(i).getName());
+							deleteList.addItem(oceanLoad.get(i).getName());
 						}
 						infpp.OceanGUI.getOceanP().removeAll();
 						infpp.OceanGUI.build();
@@ -226,7 +244,6 @@ public class OceanGUI extends JFrame {
 					} catch(ClassNotFoundException c){
 						System.err.println("Class Error");
 					}
-				//oceanTT.setText(Ocean.getInstance().plot());
 				}
 			}
 		});
@@ -257,8 +274,8 @@ public class OceanGUI extends JFrame {
 			}
 			
 			@Override
+			/**Startet die GoOn Methode*/
 			public void mouseClicked(MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				GoOn job = new GoOn();
 				moveOn = true;
 				thread = new Thread(job);
@@ -292,8 +309,8 @@ public class OceanGUI extends JFrame {
 			}
 			
 			@Override
+			/**Speicher den derzeitigen Programmzutand unter einem gewaehlten Namen*/
 			public void mouseClicked(MouseEvent arg0) {
-				// TODO Auto-generated method stub
 			    oceanSave = infpp.Ocean.getInstance().getOceanObjects();
 				String fileName = JOptionPane.showInputDialog("Enter file name");
 			    try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName+".ser"))){
@@ -331,6 +348,7 @@ public class OceanGUI extends JFrame {
 			}
 			
 			@Override
+			/**Unterbricht die GoOn-Methoden, falls sie durch den Start-Button initialisiert wurde*/
 			public void mouseClicked(MouseEvent arg0) {
 				// TODO Auto-generated method stub
 				moveOn = false;
@@ -351,13 +369,13 @@ public class OceanGUI extends JFrame {
             public void mouseEntered(MouseEvent e) {}
 
             @Override
+            /**Beendet das programm*/
             public void mouseClicked(MouseEvent e) {
-                // TODO Auto-generated method stub
             	moveOn = false;
                 OceanGUI.this.dispose();
             }
         });
-        pasteButton.addMouseListener(new MouseListener() {
+        addButton.addMouseListener(new MouseListener() {
 
             @Override
             public void mouseReleased(MouseEvent e) {}
@@ -372,12 +390,13 @@ public class OceanGUI extends JFrame {
             public void mouseEntered(MouseEvent e) {}
 
             @Override
+            /**Erstellt Objekte der gewaehlten Klasse am gewaehlten Punkt mit einem gewaehlten Namen.
+             * Aktualisiert danach die GUI*/
             public void mouseClicked(MouseEvent e) {
             	boolean stop = false;
             	boolean valName = false;
             	String objectName = "";
             	String dialog = "Insert name";
-	            /*try{*/
 	            	while(!stop){
 	            		if(!valName){
 	            			objectName = JOptionPane.showInputDialog(dialog);
@@ -407,17 +426,12 @@ public class OceanGUI extends JFrame {
 	            			if(objectChooser.getSelectedItem()==objectChooser.getItemAt(3)){
 	            			infpp.Ocean.getInstance().getOceanObjects().add(new Bubble(x,y,objectName,"Bubble"));
 	            			}
-	            			objectChooser2.addItem(objectName);
+	            			deleteList.addItem(objectName);
 	            			stop = true;
 	            		}
 	            	}
-	            /*} catch (IOException ex) {
-	            	JOptionPane.showMessageDialog(null,"error","error",JOptionPane.ERROR_MESSAGE);
-	            }*/
 	            infpp.OceanGUI.getOceanP().removeAll();
 	        	infpp.OceanGUI.build();
-	            //oceanTT.setText(Ocean.getInstance().plot());
-	            
             	}
         	});
         delButton.addMouseListener(new MouseListener() {
@@ -447,17 +461,18 @@ public class OceanGUI extends JFrame {
 			}
 			
 			@Override
+			/**Loescht ein gewaehltes Objekt sowohl aus der OceanObjects-LinkedList als auch aus der Delete-Box.
+			 * Aktualisiert danach die GUI.*/
 			public void mouseClicked(MouseEvent arg0) {
 				// TODO Auto-generated method
 				for(int i=0;i<Ocean.getInstance().getOceanObjects().size();i++){
-					if(Ocean.getInstance().getOceanObjects().get(i).getName() == objectChooser2.getSelectedItem()){
+					if(Ocean.getInstance().getOceanObjects().get(i).getName() == deleteList.getSelectedItem()){
 						Ocean.getInstance().getOceanObjects().remove(i);
 					}
 				}
-				objectChooser2.removeItem(objectChooser2.getSelectedItem());
+				deleteList.removeItem(deleteList.getSelectedItem());
 				infpp.OceanGUI.getOceanP().removeAll();
 				infpp.OceanGUI.build();
-				//oceanTT.setText(Ocean.getInstance().plot());
 			}
 		});
         stepButton.addMouseListener(new MouseListener() {
@@ -487,12 +502,13 @@ public class OceanGUI extends JFrame {
 			}
 			
 			@Override
+			/**Fuehrt die move-Methode von Ocean ein Mal aus*/
 			public void mouseClicked(MouseEvent ar) {
 				// TODO Auto-generated method stub
 				infpp.Ocean.getInstance().move();
-				//oceanTT.setText(Ocean.getInstance().plot());
 			}
 		});
+        
         JLabel xLabel = new JLabel("X-Koordinate");
         JLabel yLabel = new JLabel("Y-Koordinate");
 
@@ -500,47 +516,38 @@ public class OceanGUI extends JFrame {
         objectChooser.addItem("Plant");
         objectChooser.addItem("Stone");
         objectChooser.addItem("Bubble");
-
-        objectChooser2.addItem("Ralph");
         
-        
-
+       /**Fuege Button dem Menu-Panel hinzu*/ 
         menu.add(loadButton);
         menu.add(startButton);
         menu.add(xLabel);
         menu.add(widthSpinner);
         menu.add(objectChooser);
-        menu.add(objectChooser2);
+        menu.add(deleteList);
         menu.add(quitButton);
         menu.add(saveButton);
         menu.add(stopButton);
         menu.add(yLabel);
         menu.add(heightSpinner);
-        menu.add(pasteButton);
+        menu.add(addButton);
         menu.add(delButton);
         menu.add(stepButton);
         menu.setLayout(new GridLayout(2, 7));
         menu.setBounds(0,0,Ocean.getInstance().getWidth(),100);
         
-        /*JPanel oceanT = new JPanel();
-        oceanTT = new JLabel(TOcean);
-        oceanT.add(oceanTT);*/
         
         oceanP = new JPanel();
         
         build();
        
-        
-        
-        
+        /**Setzt die Parameter fuer das oceanP-Panel*/
         oceanP.setLayout(null);
         oceanP.setBounds(0,100,Ocean.getInstance().getWidth(), Ocean.getInstance().getDepth());
         
         
         add(menu);
         add(oceanP);
-        //add(oceanT);
-        //setLayout(new GridLayout(2, 1));
+        
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 }
