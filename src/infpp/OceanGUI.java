@@ -106,7 +106,6 @@ public class OceanGUI extends JFrame {
      * @param image
      * @param width
      * @param height
-     * @return
      */
     public static BufferedImage resize(BufferedImage image, int width, int height) {
         BufferedImage bi = new BufferedImage(width, height, BufferedImage.TRANSLUCENT);
@@ -241,6 +240,7 @@ public class OceanGUI extends JFrame {
 						in.close();
 					} catch (IOException i){
 						System.err.println("OI Error");
+						//JOptionPane.showMessageDialog(null,"Data not found.")
 					} catch(ClassNotFoundException c){
 						System.err.println("Class Error");
 					}
